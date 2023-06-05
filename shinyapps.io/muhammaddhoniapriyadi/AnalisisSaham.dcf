@@ -1,0 +1,13 @@
+name: AnalisisSaham
+title: AnalisisSaham
+username:
+account: muhammaddhoniapriyadi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9247280
+bundleId: 7304379
+url: https://muhammaddhoniapriyadi.shinyapps.io/AnalisisSaham/
+when: 1685935508.80251
+lastSyncTime: 1685935508.80254
+asMultiple: FALSE
+asStatic: FALSE
