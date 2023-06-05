@@ -1,0 +1,107 @@
+---
+title: "yahoo_finance"
+author: "Muhammad Dhoni Apriyadii"
+date: '2023-05-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+library(shiny)
+library(ggplot2)
+library(scales)
+library(glue)
+library(plotly)
+library(dplyr)
+library(lubridate)
+library(shiny)
+library(TTR)
+library(quantmod)
+library(shinythemes)
+library(shinydashboard)
+library(data.table) 
+```
+
+
+```{r}
+data <- getSymbols("VAP.AX", from = as.Date("2016-01-01"), to = as.Date("2017-07-19"), auto.assign = FALSE)
+
+data <- as.data.frame(data)
+# make copy of dataframe
+copydata <- data         
+ 
+# Apply setDT function with rowname true
+# to get the rowname
+copydata <- setDT(data, keep.rownames = TRUE)[ ]         
+ 
+# print the data
+copydata[,"VAP.AX.Open"]
+
+sum(is.na(copydata))
+
+names(copydata)[1] <- "Date"
+
+copydata$Date <- as.Date(copydata$Date)
+
+str(copydata)
+
+    
+    names(copydata)[1] <- "Date"
+    names(copydata)[2] <- "Open"
+    names(copydata)[3] <- "High"
+    names(copydata)[4] <- "Low"
+    names(copydata)[5] <- "Close"
+    names(copydata)[6] <- "Volume"
+    names(copydata)[7] <- "Adjusted"
+
+```
+
+```{r}
+OpenPlot <- ggplot(copydata, aes(x = Date, y = Open)) +
+  geom_line()
+
+OpenPlotly <- ggplotly(OpenPlot)
+
+```
+
+```{r}
+min(copydata$Low)
+max(copydata$High)
+```
+```{r}
+VolumePlot <- ggplot(copydata, aes(x = Date, y = Volume )) +
+  geom_line(col="blue")
+  
+
+ggplotly(VolumePlot)
+```
+```{r}
+VolumePlot <- ggplot(copydata, aes(x = Date, y = Volume )) +
+  geom_point(position = "jitter", col = "red")+
+   theme_light()
+
+ggplotly(VolumePlot)
+```
+
